@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'dbhelper.dart';
+import 'dashboard_page.dart';
+import 'registration_page.dart';
 
 class LoginPage extends StatefulWidget {
-  static String tag='login-page';
+  static String tag='Login';
+  static String routeName='/loginPage';
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final dbHelper=DBHelper.dbhelper;
+  var _emailTxt=new TextEditingController();
+  var _passwordTxt=new TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -18,10 +27,11 @@ child: CircleAvatar(
 )
     );
 
+
     final email=TextFormField(
       keyboardType: TextInputType.emailAddress,
+      controller: _emailTxt,
       autofocus: false,
-      initialValue: '',
       decoration: InputDecoration(
         hintText: 'Enter Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -35,7 +45,7 @@ child: CircleAvatar(
     
     final password=TextFormField(
       autofocus: false,
-      initialValue: '',
+      controller: _passwordTxt,
       decoration: InputDecoration(
         hintText: 'Enter Password',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -60,7 +70,7 @@ child: CircleAvatar(
             minWidth: 200.0,
             height: 42.0,
             onPressed: (){
-
+              verifyUserByCredentials();
             },
             color: Colors.lightBlueAccent,
             child: Text('Log In',
@@ -73,6 +83,13 @@ child: CircleAvatar(
     ),
     onPressed:(){
 
+    });
+
+    
+    final registerLabel=FlatButton(child: Text("Haven't registered?Sign Up here",style: TextStyle(color: Colors.black54)
+    ),
+    onPressed:(){
+      Navigator.of(context).pushNamed(RegistrationPage.routeName);
     });
 
     return Scaffold(
@@ -89,10 +106,48 @@ child: CircleAvatar(
             password,
             SizedBox(height:20.0),            
             loginButton,
-            SizedBox(height:20.0),
+            SizedBox(height:5.0),
+            registerLabel,
+            SizedBox(height:5.0),
             forgotLabel
-          ],)
+          ],
+          )
       )
     );
+  }
+
+  void verifyUserByCredentials() async {
+
+    // dbHelper.resetDatabase();
+    if(_emailTxt.text.trim() != "" && _passwordTxt.text.trim() != "" ){
+      
+    final user = await dbHelper.verifyUserByCredentials(_emailTxt.text,_passwordTxt.text);
+      if(user!= null){
+        print(user.name);
+        dbHelper.saveSharedPreferences(user.id);
+        Navigator.of(context).pushNamed(DashboardPage.routeName);
+      }
+      else
+      {
+        dbHelper.showAlert(context, "Validation Error", "Please enter valid username and password");
+        // Fluttertoast.showToast(msg:"Please enter valid username and password",toastLength: Toast.LENGTH_LONG,gravity: ToastGravity.BOTTOM,backgroundColor: Color.fromRGBO(255, 0, 0, 0.3),textColor: Color.fromRGBO(255, 255,255, 1) );  
+      }
+    }
+    else
+    {
+        dbHelper.showAlert(context, "Error", "Please enter Username and Password");
+      // Fluttertoast.showToast(msg:"Please enter Username and Password",toastLength: Toast.LENGTH_LONG,gravity: ToastGravity.BOTTOM,backgroundColor: Color.fromRGBO(255, 0, 0, 0.3),textColor: Color.fromRGBO(255, 255,255, 1) );
+    }
+
+    
+    // for(var row in user){
+    //   print(row);
+    //   print(row["email"]);
+    //   if(row["email"] == "vaimik@gmail.com" && row["password"] =="vaimik@123") {
+    //     print("value found");
+    //   } else {
+    //     print("value not found");
+    //   }
+    // }
   }
 }
