@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dbhelper.dart';
+import './firstTab.dart' as first;
+import './secondTab.dart' as second;
+import './thirdTab.dart' as third; 
 
 class DashboardPage extends StatefulWidget {
   static String tag='Dashboard';
@@ -9,91 +11,65 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage> with SingleTickerProviderStateMixin {
+  
+    TabController _tabController;
+    
+
+    @override
+    void initState(){
+      super.initState();
+      _tabController=new TabController(vsync: this,length: 4);
+    }
+
+    @override
+    void dispose(){
+      _tabController.dispose();
+      super.dispose();
+    }
+  
   @override
   Widget build(BuildContext context) {
-    final logo = Hero(
-tag:'hero',
-child: CircleAvatar(
-  backgroundColor:Colors.transparent,
-  radius:48.0,
-  child: new Image.asset('assets/user.png',),
-)
-    );
-
-    final email=TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      decoration: InputDecoration(
-        hintText: 'Enter Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32.0)
-        )
-      )
-    );
-
-
-    
-    final password=TextFormField(
-      autofocus: false,
-      decoration: InputDecoration(
-        hintText: 'Enter Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32.0)
-        )
-      )
-    );
-
-
-    
-    
-    final loginButton=Padding(
-      padding: EdgeInsets.symmetric(
-        vertical:16.0 
-        ),
-        child: Material(
-          borderRadius: BorderRadius.circular(30.0),
-          shadowColor: Colors.lightBlueAccent.shade100,
-          elevation: 5.0,
-          child: MaterialButton(
-            minWidth: 200.0,
-            height: 42.0,
-            onPressed: (){
-
-            },
-            color: Colors.lightBlueAccent,
-            child: Text('Log In',
-            style:TextStyle(color:Colors.white)),
+    return Scaffold(
+      appBar: new AppBar(
+        title: new Text("Dashboard",style: TextStyle(color: Colors.white70),),
+        backgroundColor: Colors.blue.shade900,
+        bottom: new TabBar(
+          controller: _tabController,
+          labelColor: Colors.white30,
+          labelStyle: TextStyle(color: Colors.white30),
+          unselectedLabelColor: Colors.white54,
+          unselectedLabelStyle: TextStyle(color: Colors.white54),
+          tabs: <Tab>[
+              new Tab(icon: new Icon(Icons.person),text: "Users",),
+              new Tab(icon: new Icon(Icons.person_add),text: "Requests"),
+              new Tab(icon: new Icon(Icons.group),text: "Friends")
+          ],
           ),
         ),
-    );
-
-    final forgotLabel=FlatButton(child: Text('Forgot Password',style: TextStyle(color: Colors.black54)
-    ),
-    onPressed:(){
-
-    });
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child:ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left:24.0,right: 24.0),
+        body: new TabBarView(
+          controller: _tabController,
           children: <Widget>[
-            email,
-            SizedBox(height:20.0),
-            password,
-            SizedBox(height:20.0),            
-            loginButton,
-            SizedBox(height:20.0),
-            forgotLabel
+            new first.FirstTab(),
+            new second.SecondTab(),
+            new third.Thirdpage(),
           ],
-          )
-      )
-    );
-  
+        ),
+        
+        );
+
+    // return Scaffold(
+    //   backgroundColor: Colors.white,
+    //   body: Center(
+    //     child:ListView(
+    //       shrinkWrap: true,
+    //       padding: EdgeInsets.only(left:24.0,right: 24.0),
+    //       children: <Widget>[
+    //         SizedBox(height:20.0),
+    //         dashboardTxt
+    //       ],
+    //       )
+    //   )
+    // );
   }
 }

@@ -27,19 +27,7 @@ class DBHelper {
   static const String ColumnProfession = "profession";
   static const String ColumnEducation = "education";
 
-  static final columnId = "id";
-  static final columnImage = "image";
-  static final columnName = "name";
-  static final columnEmail = "email";
-  static final columnPassword = "password";
-  static final columnAge = "age";
-  static final columnPhone = "phone";
-  static final columnDob = "dob";
-  static final columnAddress = "address";
-  static final columnCity = "city";
-  static final columnMaritalStatus = "mrg_status";
-  static final columnProfession = "profession";
-  static final columnEducation = "education";
+  
 
   static const String FavTableName = "Favourites";
   static const String FavColumnID = "favId";

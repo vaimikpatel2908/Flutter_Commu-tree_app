@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dbhelper.dart';
-import 'dashboard_page.dart';
-import 'registration_page.dart';
+import './dbhelper.dart';
+import './dashboard_page.dart';
+import './registration_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag='Login';

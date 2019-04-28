@@ -138,7 +138,34 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  void registerUser(){
-
+  void registerUser(){ 
+      
+    try{
+      if(_nameTxt.text.trim() != "" && _ageTxt.text.trim() != "" && _emailTxt.text != "" && _passwordTxt.text != "" )
+      {
+        int age=int.tryParse(_ageTxt.text);
+            
+        Map<String,dynamic> newUser= {
+          DBHelper.ColumnName:_nameTxt.text,
+          DBHelper.ColumnAge:age,
+          DBHelper.ColumnEmail:_emailTxt.text,
+          DBHelper.ColumnPassword:_passwordTxt.text,
+        };
+        dbHelper.insert(newUser, DBHelper.RegistrationTable);
+      }
+      else
+      {
+        dbHelper.showAlert(context, "Data validation error", "Please enter valid data");
+      }
+    }
+    catch(FormatException){
+      dbHelper.showAlert(context, "Data validation error", "Please enter valid age");
+    }
+    catch(Exception)
+    {
+      dbHelper.showAlert(context, "Error", "Data Error!!! Try again");
+    }
+    
+    Navigator.of(context).pushNamed(LoginPage.routeName);
   }
 }

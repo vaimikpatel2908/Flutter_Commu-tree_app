@@ -1,3 +1,4 @@
+import 'package:commutreeflutterapp/dbhelper.dart';
 
 class Person {
     int id;
@@ -29,20 +30,34 @@ class Person {
         this.education,
     });
 
-    int get personId => id;
-    String get personName => name;
-    String get personImage => image;
-    String get personEmail => email;
-    String get personPassword => password;
-    int get personAge => age;
-    String get personPhone =>phone;
-    String get personDob =>dob;
-    String get personAddress =>address;
-    String get personCity =>city;
-    String get personMrgStatus =>mrg_status;
-    String get personProfession =>profession;
-    String get personEducation =>education;
-
+  // static final columnId = "id";
+  // static final columnImage = "image";
+  // static final columnName = "name";
+  // static String columnEmail = "email";
+  // static String columnPassword = "password";
+  // static String columnAge = "age";
+  // static String columnPhone = "phone";
+  // static String columnDob = "dob";
+  // static String columnAddress = "address";
+  // static String columnCity = "city";
+  // static String columnMaritalStatus = "mrg_status";
+  // static String columnProfession = "profession";
+  // static String columnEducation = "education";
+  //  
+  
+   // int get personId => id;
+    // String get personName => name;
+    // String get personImage => image;
+    // String get personEmail => email;
+    // String get personPassword => password;
+    // int get personAge => age;
+    // String get personPhone =>phone;
+    // String get personDob =>dob;
+    // String get personAddress =>address;
+    // String get personCity =>city;
+    // String get personMrgStatus =>mrg_status;
+    // String get personProfession =>profession;
+    // String get personEducation =>education;
 
     factory Person.fromJson(Map<String, dynamic> data) => new Person(
         id: data["id"] as int,
@@ -76,10 +91,7 @@ class Person {
         "education": person.education,
     };
 
-
-
-    Future<List<Map<String,dynamic>>> seedData(){
-
+    List<Person> seedData(){
 
     //List of users
     List<Person> usersList=new List<Person>();
@@ -95,11 +107,8 @@ class Person {
     usersList.add(new Person(name: "Manthan Jha",image: 'assets/user.png',email: 'manthan@gmail.com',password: 'manthan',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate')); 
     // row to insert
     
-
-    // Map<String,dynamic> favrow= {
-    //   DBHelper.FavColumnUserId:1,
-    //   DBHelper.FavColumnFavUserID:2,
-    //   DBHelper.FavColumnStatus:1,
-    // };
+    return usersList;
+    
+   
     }
 }
