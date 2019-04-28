@@ -58,18 +58,5 @@ class _DashboardPageState extends State<DashboardPage> with SingleTickerProvider
         
         );
 
-    // return Scaffold(
-    //   backgroundColor: Colors.white,
-    //   body: Center(
-    //     child:ListView(
-    //       shrinkWrap: true,
-    //       padding: EdgeInsets.only(left:24.0,right: 24.0),
-    //       children: <Widget>[
-    //         SizedBox(height:20.0),
-    //         dashboardTxt
-    //       ],
-    //       )
-    //   )
-    // );
   }
 }

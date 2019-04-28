@@ -8,7 +8,6 @@ import 'models/Person.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DBHelper {
-
   static final databaseName = "CommutreeDB.db";
   static final databaseVersion = 1;
 
@@ -27,18 +26,15 @@ class DBHelper {
   static const String ColumnProfession = "profession";
   static const String ColumnEducation = "education";
 
-  
-
   static const String FavTableName = "Favourites";
   static const String FavColumnID = "favId";
   static const String FavColumnUserId = "userId";
   static const String FavColumnFavUserID = "favUserId";
   static const String FavColumnStatus = "status";
 
-
   DBHelper._();
 
-  static final DBHelper dbhelper=DBHelper._();
+  static final DBHelper dbhelper = DBHelper._();
 
   static Database _database;
 
@@ -49,22 +45,25 @@ class DBHelper {
     return _database;
   }
 
-   _initDatabase() async {
+  _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, databaseName);
     return await openDatabase(path,
-        version: databaseVersion,
-        onCreate: _onCreate);
+        version: databaseVersion, onCreate: _onCreate);
   }
 
-  static const CreateRegistrationTableQuery = "Create Table $RegistrationTable ($ColumnId Integer primary key autoincrement, $ColumnImage Text, $ColumnName Text, $ColumnEmail Text, $ColumnAge Integer, $ColumnPhone Text, $ColumnPassword Text , $ColumnDob Text ," +
-  "$ColumnAddress Text , $ColumnCity Text , $ColumnMaritalStatus Text , $ColumnProfession Text , $ColumnEducation Text)";
- 
-  static const String DeleteRegistrationTableQuery = "Drop Table if Exists $RegistrationTable";
+  static const CreateRegistrationTableQuery =
+      "Create Table $RegistrationTable ($ColumnId Integer primary key autoincrement, $ColumnImage Text, $ColumnName Text, $ColumnEmail Text, $ColumnAge Integer, $ColumnPhone Text, $ColumnPassword Text , $ColumnDob Text ," +
+          "$ColumnAddress Text , $ColumnCity Text , $ColumnMaritalStatus Text , $ColumnProfession Text , $ColumnEducation Text)";
 
-  static const String CreateFavouritesTableQuery = "Create Table $FavTableName ( $FavColumnID Integer primary key autoincrement, $FavColumnUserId int,$FavColumnFavUserID int, $FavColumnStatus bool)";
+  static const String DeleteRegistrationTableQuery =
+      "Drop Table if Exists $RegistrationTable";
 
-  static const String DeleteFavouritesTableQuery = "Drop Table If Exists " + FavTableName;
+  static const String CreateFavouritesTableQuery =
+      "Create Table $FavTableName ( $FavColumnID Integer primary key autoincrement, $FavColumnUserId int,$FavColumnFavUserID int, $FavColumnStatus bool)";
+
+  static const String DeleteFavouritesTableQuery =
+      "Drop Table If Exists " + FavTableName;
 
   //execcutes on oncreate event of Database
   Future _onCreate(Database db, int version) async {
@@ -81,11 +80,11 @@ class DBHelper {
   // Inserts a row in the database where each key in the Map is a column name
   // and the value is the column value. The return value is the id of the
   // inserted row.
-  Future<int> insert(Map<String, dynamic> row,String tablename) async {
+  Future<int> insert(Map<String, dynamic> row, String tablename) async {
     return await _database.insert(tablename, row);
   }
 
-  // All of the rows are returned as a list of maps, where each map is 
+  // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows(String tablename) async {
     Database db = await dbhelper.database;
@@ -96,45 +95,48 @@ class DBHelper {
   // raw SQL commands. This method uses a raw query to give the row count.
   Future<int> queryRowCount(String tablename) async {
     Database db = await dbhelper.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $tablename'));
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $tablename'));
   }
 
-  // We are assuming here that the id column in the map is set. The other 
+  // We are assuming here that the id column in the map is set. The other
   // column values will be used to update the row.
-  Future<int> update(Map<String, dynamic> row,String tablename,String idColumnName) async {
+  Future<int> update(
+      Map<String, dynamic> row, String tablename, String idColumnName) async {
     Database db = await dbhelper.database;
     int id = row[idColumnName];
-    return await db.update(tablename, row, where: '$idColumnName = ?', whereArgs: [id]);
+    return await db
+        .update(tablename, row, where: '$idColumnName = ?', whereArgs: [id]);
   }
 
-  // Deletes the row specified by the id. The number of affected rows is 
+  // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
-  Future<int> delete(int id,String tablename,String idColumnName) async {
+  Future<int> delete(int id, String tablename, String idColumnName) async {
     Database db = await dbhelper.database;
-    return await db.delete(tablename, where: '$idColumnName = ?', whereArgs: [id]);
+    return await db
+        .delete(tablename, where: '$idColumnName = ?', whereArgs: [id]);
   }
 
-  Future<Person> verifyUserByCredentials(String email,String password) async {
+  Future<Person> verifyUserByCredentials(String email, String password) async {
     Database db = await dbhelper.database;
-    String query="SELECT * FROM $RegistrationTable where $ColumnEmail= '$email' and $ColumnPassword= '$password'";
-    final result=await db.rawQuery(query);
-    if(result.length != 0){
+    String query =
+        "SELECT * FROM $RegistrationTable where $ColumnEmail= '$email' and $ColumnPassword= '$password'";
+    final result = await db.rawQuery(query);
+    if (result.length != 0) {
       print(result[0]);
       // return Person.fromJson(result);
       return Person.fromJson(result[0]);
-    }
-    else
-    {
+    } else {
       return null;
     }
     // if(result != null){
-    //     return result[0][columnId];  
+    //     return result[0][columnId];
     // }
     // else{
     //   return 0;
     // }
   }
-  
+
   //Reset Dataabse
   Future resetDatabase() async {
     _database.execute(DeleteRegistrationTableQuery);
@@ -143,21 +145,66 @@ class DBHelper {
     _database.execute(CreateFavouritesTableQuery);
   }
 
-  Future<bool> saveSharedPreferences(int userId) async {
-    SharedPreferences prefs= await SharedPreferences.getInstance();
-    prefs.setInt("UserId", userId);
+  
+  Future<List<Person>> selectAllUsers(int userId) async {
+    String query =
+        "Select * from $RegistrationTable where $ColumnId != $userId";
+    List<Person> personList = new List<Person>();
+
+    final result = await _database.rawQuery(query);
+    if (result.length != 0) {
+      result.forEach((person) {
+        personList.add(new Person(
+            id: person[0],
+            name: person[1],
+            image: person[2],
+            email: person[3],
+            password: person[4],
+            age: person[5],
+            dob: person[6],
+            phone: person[7],
+            address: person[8],
+            city: person[9],
+            profession: person[10],
+            education: person[11]));
+      });
+
+      return personList;
+    } else {
+      return null;
+    }
+  }
+
+  Future<Person> getDataByUserId(int userId) async {
+    String query = "Select * from $RegistrationTable where $ColumnId = $userId";
+
+    final result = await _database.rawQuery(query);
+    if (result.length != 0) {
+      //need to pass data here
+      // Person person = new Person(result[0], cursor.GetInt(1), cursor.GetString(2), cursor.GetInt(4), cursor.GetString(3), cursor.GetString(5), cursor.GetString(6), cursor.GetString(7), cursor.GetString(8), cursor.GetString(9), cursor.GetString(11), cursor.GetString(10));
+      print(result);
+      //ShowAlert("Data Verified", "Login Successfull");
+      return null;
+    }
+
+    return null;
+  }
+
+  Future<bool> saveSharedPreferences(String key,int userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(key, userId);
 
     return prefs.commit();
   }
 
   Future<int> getSharedPreferences(String key) async {
-    SharedPreferences prefs= await SharedPreferences.getInstance();
-    final userId= prefs.getInt(key);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getInt(key);
 
     return userId;
   }
 
-  Future showAlert(BuildContext context,String title,String msg) {
+  Future showAlert(BuildContext context, String title, String msg) {
     // flutter defined function
     showDialog(
       context: context,

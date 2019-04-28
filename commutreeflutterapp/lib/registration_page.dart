@@ -151,7 +151,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
           DBHelper.ColumnEmail:_emailTxt.text,
           DBHelper.ColumnPassword:_passwordTxt.text,
         };
+
+        //inserting user data into registration table
         dbHelper.insert(newUser, DBHelper.RegistrationTable);
+
+        //Redirecting to login Page
+        Navigator.of(context).pushNamed(LoginPage.routeName);
       }
       else
       {
@@ -161,11 +166,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
     catch(FormatException){
       dbHelper.showAlert(context, "Data validation error", "Please enter valid age");
     }
-    catch(Exception)
-    {
-      dbHelper.showAlert(context, "Error", "Data Error!!! Try again");
-    }
-    
-    Navigator.of(context).pushNamed(LoginPage.routeName);
   }
 }

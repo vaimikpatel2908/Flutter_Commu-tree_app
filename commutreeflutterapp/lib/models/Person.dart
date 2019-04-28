@@ -1,4 +1,3 @@
-import 'package:commutreeflutterapp/dbhelper.dart';
 
 class Person {
     int id;
@@ -30,34 +29,6 @@ class Person {
         this.education,
     });
 
-  // static final columnId = "id";
-  // static final columnImage = "image";
-  // static final columnName = "name";
-  // static String columnEmail = "email";
-  // static String columnPassword = "password";
-  // static String columnAge = "age";
-  // static String columnPhone = "phone";
-  // static String columnDob = "dob";
-  // static String columnAddress = "address";
-  // static String columnCity = "city";
-  // static String columnMaritalStatus = "mrg_status";
-  // static String columnProfession = "profession";
-  // static String columnEducation = "education";
-  //  
-  
-   // int get personId => id;
-    // String get personName => name;
-    // String get personImage => image;
-    // String get personEmail => email;
-    // String get personPassword => password;
-    // int get personAge => age;
-    // String get personPhone =>phone;
-    // String get personDob =>dob;
-    // String get personAddress =>address;
-    // String get personCity =>city;
-    // String get personMrgStatus =>mrg_status;
-    // String get personProfession =>profession;
-    // String get personEducation =>education;
 
     factory Person.fromJson(Map<String, dynamic> data) => new Person(
         id: data["id"] as int,

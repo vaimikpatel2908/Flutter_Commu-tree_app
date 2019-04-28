@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dbhelper.dart';
-import 'models/Person.dart';
+import './dbhelper.dart';
+import './models/Person.dart';
+import './userDetails.dart';
 
 class FirstTab extends StatefulWidget {
   @override
@@ -15,9 +16,21 @@ class _FirstTabState extends State<FirstTab> {
   @override
   void initState(){
     super.initState();
-    setState(() {
-          usersList= person.seedData();
+    setState(() async {
+          usersList= await getAllUsers();
     });
+  }
+
+  Future<List<Person>> getAllUsers() async {
+    try{
+    int userId= await dbHelper.getSharedPreferences("userId");
+    List<Person> listOfUsers= await dbHelper.selectAllUsers(int.tryParse(userId.toString()));
+    return listOfUsers;
+    }
+    catch(Exception){
+      dbHelper.showAlert(context, "Error", "Try Again");
+      return null;
+    }
   }
 
   @override
@@ -26,28 +39,24 @@ class _FirstTabState extends State<FirstTab> {
       body: ListView.builder(
         itemCount:usersList.length,
         itemBuilder: (BuildContext context,int index){
-          return new Card(
-            child:new Container(
-              padding: EdgeInsets.all(5.0),
-              child: new Row(
-                children: <Widget>[
-                  Image.asset('assets/user.png',width: 70.0,height: 70.0,),
-                  new Column(
-                    children: <Widget>[
-                      Text(usersList[index].name,textAlign: TextAlign.center,style: TextStyle(fontSize: 20.0),),
-                      Text("Age :"+usersList[index].age.toString(),textAlign: TextAlign.left,),
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
-                ],
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-              ),
-            )
-          );
+          return new ListTile(
+            leading: Image.asset('assets/user.png',width: 70.0,height: 70.0,),
+            title: Text(usersList[index].name,textAlign: TextAlign.left,style: TextStyle(fontSize: 20.0),),
+            subtitle: Text("Age :"+usersList[index].age.toString(),textAlign: TextAlign.left,),
+            onTap: () async {
+              MaterialPageRoute route= await new MaterialPageRoute(
+                builder: (BuildContext context) {
+                  new UserDetailsPage(userId:usersList[index].id);
+              });
 
+              //Redirecting to UserDetails page with user's id
+              Navigator.of(context).push(route);
+            },
+          );
         },
       ),
     );
+
+
   }
 }

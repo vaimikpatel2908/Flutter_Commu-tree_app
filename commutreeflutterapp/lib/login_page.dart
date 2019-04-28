@@ -124,7 +124,7 @@ child: CircleAvatar(
     final user = await dbHelper.verifyUserByCredentials(_emailTxt.text,_passwordTxt.text);
       if(user!= null){
         print(user.name);
-        dbHelper.saveSharedPreferences(user.id);
+        dbHelper.saveSharedPreferences("userId",user.id);
         Navigator.of(context).pushNamed(DashboardPage.routeName);
       }
       else
@@ -139,15 +139,5 @@ child: CircleAvatar(
       // Fluttertoast.showToast(msg:"Please enter Username and Password",toastLength: Toast.LENGTH_LONG,gravity: ToastGravity.BOTTOM,backgroundColor: Color.fromRGBO(255, 0, 0, 0.3),textColor: Color.fromRGBO(255, 255,255, 1) );
     }
 
-    
-    // for(var row in user){
-    //   print(row);
-    //   print(row["email"]);
-    //   if(row["email"] == "vaimik@gmail.com" && row["password"] =="vaimik@123") {
-    //     print("value found");
-    //   } else {
-    //     print("value not found");
-    //   }
-    // }
   }
 }
