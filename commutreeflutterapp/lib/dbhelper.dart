@@ -137,14 +137,6 @@ class DBHelper {
     // }
   }
 
-  //Reset Dataabse
-  Future resetDatabase() async {
-    _database.execute(DeleteRegistrationTableQuery);
-    _database.execute(DeleteFavouritesTableQuery);
-    _database.execute(CreateRegistrationTableQuery);
-    _database.execute(CreateFavouritesTableQuery);
-  }
-
   
   Future<List<Person>> selectAllUsers(int userId) async {
     String query =
@@ -152,21 +144,11 @@ class DBHelper {
     List<Person> personList = new List<Person>();
 
     final result = await _database.rawQuery(query);
+    print(result.length);
     if (result.length != 0) {
       result.forEach((person) {
-        personList.add(new Person(
-            id: person[0],
-            name: person[1],
-            image: person[2],
-            email: person[3],
-            password: person[4],
-            age: person[5],
-            dob: person[6],
-            phone: person[7],
-            address: person[8],
-            city: person[9],
-            profession: person[10],
-            education: person[11]));
+        print(person);
+        personList.add(Person.fromJson(person));
       });
 
       return personList;
@@ -193,18 +175,18 @@ class DBHelper {
   Future<bool> saveSharedPreferences(String key,int userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, userId);
-
+    print("Set shared preference");
     return prefs.commit();
   }
 
   Future<int> getSharedPreferences(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getInt(key);
-
+    print("got shared preference");
     return userId;
   }
 
-  Future showAlert(BuildContext context, String title, String msg) {
+  void showAlert(BuildContext context, String title, String msg) {
     // flutter defined function
     showDialog(
       context: context,
@@ -227,4 +209,21 @@ class DBHelper {
     );
   }
 
+  //Reset Dataabse
+  Future resetDatabase() async {
+    _database.execute(DeleteRegistrationTableQuery);
+    _database.execute(DeleteFavouritesTableQuery);
+    _database.execute(CreateRegistrationTableQuery);
+    _database.execute(CreateFavouritesTableQuery);
+    print("Database cleared");
+  }
+
+  //Seeding data for testing purpose
+  void seedDataToDatabase() {
+    List<Person> listOfUsers=Person.seedData();
+    listOfUsers.forEach((person){
+      insert(Person.toJson(person), DBHelper.RegistrationTable);
+    });
+    print("Data Seeded to Database");
+  }
 }

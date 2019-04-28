@@ -16,7 +16,7 @@ class _SecondTabState extends State<SecondTab> {
   void initState(){
     super.initState();
     setState(() {
-          usersList= person.seedData();
+          usersList= Person.seedData();
     });
 
   }

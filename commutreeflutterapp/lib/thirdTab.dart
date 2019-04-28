@@ -16,7 +16,7 @@ final DBHelper dbHelper=DBHelper.dbhelper;
   void initState(){
     super.initState();
     setState(() {
-          usersList= person.seedData();
+          usersList= Person.seedData();
     });
   }
 

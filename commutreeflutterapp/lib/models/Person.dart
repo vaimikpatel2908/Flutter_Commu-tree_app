@@ -46,7 +46,7 @@ class Person {
         education: data["education"] as String,
     );
 
-    Map<String, dynamic> toJson(Person person) => {
+    static Map<String, dynamic> toJson(Person person) => {
         "id": person.id,
         "name": person.name,
         "image": person.image,
@@ -62,7 +62,7 @@ class Person {
         "education": person.education,
     };
 
-    List<Person> seedData(){
+    static List<Person> seedData(){
 
     //List of users
     List<Person> usersList=new List<Person>();
