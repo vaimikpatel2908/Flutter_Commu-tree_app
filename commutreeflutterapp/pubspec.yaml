@@ -49,6 +49,21 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/user.png
+    - assets/1.png
+    - assets/2.png
+    - assets/3.png
+    - assets/4.png
+    - assets/5.png
+    - assets/6.png
+    - assets/7.png
+    - assets/8.png
+    - assets/9.png
+    - assets/10.png
+    - assets/app_back1.jpg
+    - assets/appback.jpg
+    - assets/back3.jpg
+    - assets/icon.png
+    - assets/location1.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

@@ -150,7 +150,6 @@ class DBHelper {
         print(person);
         personList.add(Person.fromJson(person));
       });
-
       return personList;
     } else {
       return null;
@@ -163,10 +162,10 @@ class DBHelper {
     final result = await _database.rawQuery(query);
     if (result.length != 0) {
       //need to pass data here
-      // Person person = new Person(result[0], cursor.GetInt(1), cursor.GetString(2), cursor.GetInt(4), cursor.GetString(3), cursor.GetString(5), cursor.GetString(6), cursor.GetString(7), cursor.GetString(8), cursor.GetString(9), cursor.GetString(11), cursor.GetString(10));
+      Person person = Person.fromJson(result[0]);
       print(result);
       //ShowAlert("Data Verified", "Login Successfull");
-      return null;
+      return person;
     }
 
     return null;

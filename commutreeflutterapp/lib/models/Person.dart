@@ -67,15 +67,15 @@ class Person {
     //List of users
     List<Person> usersList=new List<Person>();
 
-    usersList.add(new Person(name: "vaimik patel",image: 'assets/user.png',email: 'vaimik@gmail.com',password: 'vaimik',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Milen Louis",image: 'assets/user.png',email: 'milen@gmail.com',password: 'milen',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Kushal Sarawagi",image: 'assets/user.png',email: 'kushal@gmail.com',password: 'kushal',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Akif Shaikh",image: 'assets/user.png',email: 'akif@gmail.com',password: 'akif',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Chirag Vira",image: 'assets/user.png',email: 'chirag@gmail.com',password: 'chirag',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Pooja Patel",image: 'assets/user.png',email: 'pooja@gmail.com',password: 'pooja',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Shreya Patel",image: 'assets/user.png',email: 'shreya@gmail.com',password: 'shreya',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Ami Jani",image: 'assets/user.png',email: 'ami@gmail.com',password: 'ami',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
-    usersList.add(new Person(name: "Manthan Jha",image: 'assets/user.png',email: 'manthan@gmail.com',password: 'manthan',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate')); 
+    usersList.add(new Person(name: "vaimik patel",image: 'assets/1.png',email: 'vaimik@gmail.com',password: 'vaimik',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Milen Louis",image: 'assets/2.png',email: 'milen@gmail.com',password: 'milen',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Kushal Sarawagi",image: 'assets/3.png',email: 'kushal@gmail.com',password: 'kushal',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Akif Shaikh",image: 'assets/4.png',email: 'akif@gmail.com',password: 'akif',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Chirag Vira",image: 'assets/5.png',email: 'chirag@gmail.com',password: 'chirag',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Pooja Patel",image: 'assets/6.png',email: 'pooja@gmail.com',password: 'pooja',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Shreya Patel",image: 'assets/7.png',email: 'shreya@gmail.com',password: 'shreya',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Ami Jani",image: 'assets/8.png',email: 'ami@gmail.com',password: 'ami',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate'));
+    usersList.add(new Person(name: "Manthan Jha",image: 'assets/9.png',email: 'manthan@gmail.com',password: 'manthan',age: 24,dob: '08/29/1994',phone: '+1(437)7716754',address: '1 Lee Centre Drive',city: 'Toronto',profession: 'Student',education: 'Post Graduate')); 
     // row to insert
     
     return usersList;

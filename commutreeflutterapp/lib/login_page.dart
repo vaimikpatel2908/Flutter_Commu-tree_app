@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           radius: 48.0,
           child: new Image.asset(
-            'assets/user.png',
+            'assets/icon.png',
           ),
         ));
 
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             verifyUserByCredentials();
           },
-          color: Colors.lightBlueAccent,
+          color: Colors.blue.shade900,
           child: Text('Log In', style: TextStyle(color: Colors.white)),
         ),
       ),
@@ -76,7 +76,12 @@ class _LoginPageState extends State<LoginPage> {
         });
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: Image.asset('assets/icon.png',height: 20.0,width: 20.0,),
+          title: Text("Commu-tree"),
+          backgroundColor: Colors.blue.shade900,
+        ),
+        backgroundColor: Colors.grey.shade300,
         body: Center(
             child: ListView(
           shrinkWrap: true,

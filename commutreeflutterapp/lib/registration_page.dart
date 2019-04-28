@@ -25,7 +25,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       child: CircleAvatar(
       backgroundColor:Colors.transparent,
       radius:48.0,
-      child: new Image.asset('assets/user.png',),
+      child: new Image.asset('assets/icon.png',),
       )
     );
 
@@ -91,7 +91,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         child: Material(
           borderRadius: BorderRadius.circular(30.0),
-          shadowColor: Colors.lightBlueAccent.shade100,
+          shadowColor: Colors.blue.shade900,
           elevation: 5.0,
           child: MaterialButton(
             minWidth: 200.0,
@@ -99,7 +99,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             onPressed: (){
               registerUser();
             },
-            color: Colors.lightBlueAccent,
+            color: Colors.blue.shade900,
             child: Text('Register',
             style:TextStyle(color:Colors.white)),
           ),
@@ -113,6 +113,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
 
     return Scaffold(
+      appBar: AppBar(
+          leading: Image.asset('assets/icon.png',height: 20.0,width: 20.0,),
+          title: Text("Commu-tree"),
+          backgroundColor: Colors.blue.shade900,
+        ),
       backgroundColor: Colors.white,
       body: Center(
         child:ListView(
@@ -150,6 +155,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           DBHelper.ColumnAge:age,
           DBHelper.ColumnEmail:_emailTxt.text,
           DBHelper.ColumnPassword:_passwordTxt.text,
+          DBHelper.ColumnImage:'assets/user.png',
         };
 
         //inserting user data into registration table
