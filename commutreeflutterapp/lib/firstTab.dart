@@ -31,13 +31,16 @@ class _FirstTabState extends State<FirstTab> {
           return usersData.hasData
               ? new Scaffold(
                   body: ListView.builder(
+                    padding: EdgeInsets.all(2.0),
                       itemCount: usersData.data.length,
                       itemBuilder: (BuildContext context, int index) {
                         return new ListTile(
-                          leading: Image.asset(
-                            'assets/user.png',
-                            width: 70.0,
-                            height: 70.0,
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: 32.0,
+                            child: new Image.asset(
+                              usersData.data[index].image!=null?usersData.data[index].image:'assets/user.png',
+                            ),
                           ),
                           title: Text(
                             usersData.data[index].name,
@@ -54,7 +57,7 @@ class _FirstTabState extends State<FirstTab> {
                               context,
                               new MaterialPageRoute(
                                   builder: (context) => new UserDetailsPage(
-                                      userId: usersData.data[index].id)),
+                                      favUserId: usersData.data[index].id)),
                             );
                           },
                         );

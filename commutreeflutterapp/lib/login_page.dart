@@ -25,7 +25,8 @@ class _LoginPageState extends State<LoginPage> {
           child: new Image.asset(
             'assets/icon.png',
           ),
-        ));
+        )
+        );
 
     final email = TextFormField(
         keyboardType: TextInputType.emailAddress,
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void verifyUserByCredentials() async {
     // dbHelper.resetDatabase();
-    //dbHelper.seedDataToDatabase();
+    // dbHelper.seedDataToDatabase();
     if (_emailTxt.text.trim() != "" && _passwordTxt.text.trim() != "") {
       final user = await dbHelper.verifyUserByCredentials(
           _emailTxt.text, _passwordTxt.text);
@@ -113,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
         if (await dbHelper.saveSharedPreferences("userId", user.id)) {
           Navigator.of(context).pushNamed(DashboardPage.routeName);
         }
-        ;
       } else {
         dbHelper.showAlert(context, "Validation Error",
             "Please enter valid username and password");

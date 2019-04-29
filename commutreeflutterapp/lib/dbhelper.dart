@@ -123,21 +123,14 @@ class DBHelper {
         "SELECT * FROM $RegistrationTable where $ColumnEmail= '$email' and $ColumnPassword= '$password'";
     final result = await db.rawQuery(query);
     if (result.length != 0) {
-      print(result[0]);
+      // print(result[0]);
       // return Person.fromJson(result);
       return Person.fromJson(result[0]);
     } else {
       return null;
     }
-    // if(result != null){
-    //     return result[0][columnId];
-    // }
-    // else{
-    //   return 0;
-    // }
   }
 
-  
   Future<List<Person>> selectAllUsers(int userId) async {
     String query =
         "Select * from $RegistrationTable where $ColumnId != $userId";
@@ -147,7 +140,7 @@ class DBHelper {
     print(result.length);
     if (result.length != 0) {
       result.forEach((person) {
-        print(person);
+        // print(person);
         personList.add(Person.fromJson(person));
       });
       return personList;
@@ -163,7 +156,7 @@ class DBHelper {
     if (result.length != 0) {
       //need to pass data here
       Person person = Person.fromJson(result[0]);
-      print(result);
+      // print(result);
       //ShowAlert("Data Verified", "Login Successfull");
       return person;
     }
@@ -171,17 +164,103 @@ class DBHelper {
     return null;
   }
 
-  Future<bool> saveSharedPreferences(String key,int userId) async {
+  void deleteFromFavourites(int userId, int favUserId) {
+    var deleteFavQuery =
+        "Delete from $FavTableName where $FavColumnUserId= $userId and $FavColumnFavUserID = $favUserId";
+
+    _database.execute(deleteFavQuery);
+    print("Removed from Friend");
+  }
+
+  //getting all favourite users by userID and requeststatus is true
+  Future<List<Person>> getUserFavoritesList(int userId) async {
+    String query =
+        "Select $FavColumnID,$FavColumnUserId,$FavColumnFavUserID,$ColumnName,$ColumnImage from $FavTableName join $RegistrationTable on $FavColumnFavUserID = $ColumnId where $FavColumnUserId =$userId and $FavColumnStatus=2";
+
+    List<Person> favList = new List<Person>();
+    final result = await _database.rawQuery(query);
+    if (result.length != 0) {
+      result.forEach((person) {
+        favList.add(Person.fromJson(person));
+      });
+      // print("Friends list fetched");
+      return favList;
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Person>> getRequests(int userId) async {
+    String query =
+        "Select $FavColumnID ,$FavColumnUserId ,$FavColumnFavUserID ,$ColumnName ,$ColumnImage from $FavTableName join $RegistrationTable on $FavColumnUserId =$ColumnId where $FavColumnFavUserID = $userId and $FavColumnStatus =1";
+
+    List<Person> requestList = new List<Person>();
+    final result = await _database.rawQuery(query);
+    if (result.length != 0) {
+      result.forEach((person) {
+        requestList.add(Person.fromJson(person));
+      });
+      // print("Requests got");
+      return requestList;
+    } else {
+      return null;
+    }
+  }
+
+  //checking RequestStatus
+  //status 0 -> no request sent
+  //status 1 -> Pending(Request sent)
+  //status 2 -> Accepted
+  Future<int> checkRequestStatus(int userId, int favUserId) async {
+    String query =
+        "Select * from $FavTableName where $FavColumnUserId =$userId and $FavColumnFavUserID =$favUserId";
+    final result = await _database.rawQuery(query);
+    int favouritesStatus = 0;
+    if (result.length != 0) {
+      // print(result);
+      favouritesStatus = result[0]["favId"];
+    }
+    return favouritesStatus;
+  }
+
+  Future<bool> hasRequest(int favUserId, int userId) async {
+    bool hasRequest = false;
+    String query =
+        "Select * from $FavTableName where $FavColumnUserId =$favUserId and $FavColumnFavUserID =$userId and $FavColumnStatus=1";
+    final result = await _database.rawQuery(query);
+    if (result.length != 0) {
+      hasRequest = true;
+      print("Has request");
+    }else{
+      print("No request");}
+    return hasRequest;
+  }
+
+  void acceptRequest(int favUserId, int userId)
+  {
+      String query="Update $FavTableName set $FavColumnStatus=2 where $FavColumnUserId =$favUserId and $FavColumnFavUserID =$userId";
+      _database.execute(query);
+
+      Map<String,dynamic> favRequest= {
+          DBHelper.FavColumnUserId:userId,
+          DBHelper.FavColumnFavUserID:favUserId,
+          DBHelper.FavColumnStatus:2,
+        };
+      insert(favRequest, DBHelper.FavTableName);
+      print("Request Accepted");
+  }
+
+  Future<bool> saveSharedPreferences(String key, int userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, userId);
-    print("Set shared preference");
+    // print("Set shared preference");
     return prefs.commit();
   }
 
   Future<int> getSharedPreferences(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getInt(key);
-    print("got shared preference");
+    // print("got shared preference");
     return userId;
   }
 
@@ -219,8 +298,8 @@ class DBHelper {
 
   //Seeding data for testing purpose
   void seedDataToDatabase() {
-    List<Person> listOfUsers=Person.seedData();
-    listOfUsers.forEach((person){
+    List<Person> listOfUsers = Person.seedData();
+    listOfUsers.forEach((person) {
       insert(Person.toJson(person), DBHelper.RegistrationTable);
     });
     print("Data Seeded to Database");
